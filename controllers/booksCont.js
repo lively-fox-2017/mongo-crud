@@ -38,7 +38,45 @@ let createbooks = (req, res) => {
   })
 }
 
+let updateBook = (req, res) => {
+  MongoClient.connect(url, function (err, db) {
+    let collection = db.collection('library')
+    if (!err) {
+      collection.updateOne({_id: objectId(req.params.id)}, {
+        isbn : req.body.isbn,
+        title: req.body.title,
+        author: req.body.author,
+        category: req.body.category,
+        stock : req.body.stock
+      }, function (err, result) {
+        if (!err) {
+          res.send(result)
+        } else {
+          res.send(err)
+        }
+      })
+    }
+  })
+}
+
+let deleteBook = (req, res) => {
+  MongoClient.connect(url, function (err, db) {
+    let collection = db.collection('library')
+    if (!err) {
+      collection.deleteOne({_id: objectId(req.params.id)}, function (err, result) {
+        if (!err) {
+          res.send(result)
+        } else {
+          res.send(err)
+        }
+      })
+    }
+  })
+}
+
 module.exports = {
   allbooks,
-  createbooks
+  createbooks,
+  updateBook,
+  deleteBook
 }

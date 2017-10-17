@@ -1,6 +1,6 @@
 const mongo = require('mongodb')
 const mongoClient = mongo.MongoClient
-const url = 'mongodb://admin:admin@localhost:27017/library'
+const url = 'mongodb://admin:admin@localhost:27017/library' // with mongoDB role authenticate
 const helper = require('../helper/helper')
 
 class Book{
@@ -42,11 +42,61 @@ class Book{
     });
   }
 
-  // static insert(){
-  //   return new Promise((resolve, reject) => {
-  //
-  //   });
-  // }
+  static insert(reqBody){
+    return new Promise((resolve, reject) => {
+      mongoClient.connect(url, helper.mongoAuth, (err, library) => {
+        if (err) {
+          reject(err)
+        } else {
+          library.collection("books").insertOne(helper.dataObj(reqBody), (err, result) => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve(result)
+            }
+          })
+        }
+      })
+    });
+  }
+
+  static update(reqBody, id){
+    return new Promise((resolve, reject) => {
+      mongoClient.connect(url, helper.mongoAuth, (err, library) => {
+        if (err) {
+          reject(err)
+        } else {
+          let objId = mongo.ObjectID(id)
+          library.collection("books").updateOne({_id: objId},{$set:helper.dataObj(reqBody)}, (err, result) => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve(result)
+            }
+          })
+        }
+      })
+    });
+  }
+
+  static delete(id){
+    return new Promise((resolve, reject) => {
+      mongoClient.connect(url, helper.mongoAuth, (err, library) => {
+        if (err) {
+          reject(err)
+        } else {
+          let objId = mongo.ObjectID(id)
+          library.collection("books").deleteOne({_id: objId}, (err, result) => {
+            if (err){
+              reject(err)
+            } else {
+              resolve(result)
+            }
+          })
+        }
+      })
+    });
+  }
 }
 
 module.exports = Book

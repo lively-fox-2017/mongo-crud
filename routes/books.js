@@ -6,4 +6,10 @@ router.get("/", book.findAll);
 
 router.get("/:id", book.findOne);
 
+router.post("/insert", book.insert);
+
+router.put("/update/:id", book.update);
+
+router.delete("/delete/:id", book.delete);
+
 module.exports = router

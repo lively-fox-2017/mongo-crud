@@ -16,10 +16,16 @@ module.exports = {
 
   findOne: (req, res) => {
     Book.findOne(req.params.id).then((rowBook) => {
-      res.json({
-        message: "Tampil 1 Data",
-        data: rowBook
-      })
+      if (rowBook){
+        res.json({
+          message: "Tampil 1 Data",
+          data: rowBook
+        })
+      } else {
+        res.json({
+          message: "Data tidak di temukan"
+        })
+      }
     }).catch((reason) => {
       res.json({
         message: reason
@@ -42,10 +48,16 @@ module.exports = {
 
   update: (req, res) => {
     Book.update(req.body, req.params.id).then((rowBookUpdated) => {
-      res.json({
-        message: "Berhasil Ubah Data",
-        data: rowBookUpdated
-      })
+      if (rowBookUpdated.result.n != 0) {
+        res.json({
+          message: "Berhasil Ubah Data",
+          data: rowBookUpdated
+        })
+      } else {
+        res.json({
+          message: "Maaf ID tersebut tidak ada"
+        })
+      }
     }).catch((reason) => {
       res.json({
         message: reason
@@ -55,10 +67,16 @@ module.exports = {
 
   delete: (req, res) => {
     Book.delete(req.params.id).then((rowBookDeleted) => {
-      res.json({
-        message: "Berhasil Hapus Data",
-        data: rowBookDeleted
-      })
+      if (rowBookDeleted.result.n != 0) {
+        res.json({
+          message: "Berhasil Hapus Data",
+          data: rowBookDeleted
+        })
+      } else {
+        res.json({
+          message: "Maaf ID tersebut tidak ada"
+        })
+      }
     }).catch((reason) => {
       res.json({
         message: reason

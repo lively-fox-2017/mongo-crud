@@ -3,14 +3,6 @@ const MongoClient = mongodb.MongoClient
 
 var url = 'mongodb://localhost:27017/library';
 
-function insertDocument(db, callback){
-  let collection = db.collection('documents');
-
-  collection.insertMany([
-    {a : 1}, {a : 2}
-  ])
-}
-
 
 MongoClient.connect(url, (err, db)=>{
   let bookCollection = db.collection('books');

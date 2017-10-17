@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Book = require('../models/book');
+const Book = require('../controllers/bookCtrl');
 
 router.get('/', Book.getBooks);
 router.get('/:isbn', Book.getBook);

@@ -1,18 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Book = require('../models/book');
+const Book = require('../controllers/book');
 
-router.post('/', (req, res)=>{
-  let insertedData = {
-    isbn:req.body.isbn,
-    title: req.body.title,
-    author: req.body.author,
-    category: req.body.category,
-    stock: req.body.stock
-  }
-  Book.insert(insertedData).then((result)=>{
-    res.status(201).send(result);
-  })
-})
+router.post('/', Book.insertData)
+router.get('/', Book.getAllData)
+router.get('/:key/:value', Book.getDataBy)
+router.delete('/:key/:value', Book.deleteBy)
+router.put('/:isbn', Book.updateByIsbn)
 
 module.exports = router;

@@ -13,7 +13,7 @@ class Book {
 
         if (err) throw err;
 
-        db.close();
+        // db.close();
         callback(books);
 
       });
@@ -32,7 +32,7 @@ class Book {
 
         if (err) throw err;
 
-        db.close();
+        // db.close();
         callback(book);
 
       });
@@ -55,7 +55,7 @@ class Book {
 
         if (err) throw err;
 
-        db.close();
+        // db.close();
         callback(book);
 
       });
@@ -83,7 +83,7 @@ class Book {
 
           book.newValue = newBook;
 
-          db.close();
+          // db.close();
           callback(book);
 
         }
@@ -109,7 +109,7 @@ class Book {
 
           if (err) throw err;
 
-          db.close();
+          // db.close();
           callback(book);
 
         }

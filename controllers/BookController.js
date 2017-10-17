@@ -66,10 +66,21 @@ class BookController {
 
     }, (book) => {
 
-      res.status(200).json({
-        message: 'book successfully updated',
-        book: book
-      });
+      // If book
+      if (book.value) {
+
+        res.status(200).json({
+          message: 'book successfully updated',
+          book: book
+        });
+
+      } else {
+
+        res.status(404).json({
+          message: 'book not found'
+        });
+        
+      }
 
     });
 

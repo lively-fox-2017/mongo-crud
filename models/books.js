@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/library";
-
+var ObjectID = require('mongodb').ObjectID
 
 class DataBooks {
 
@@ -24,7 +24,10 @@ class DataBooks {
     });
   }
 
-  static editData(condition,newData){
+  static editData(id,newData){
+    let condition={
+      _id : new ObjectID(id)
+    }
     return new Promise(function(resolve, reject) {
       MongoClient.connect(url, function(err, db) {
         db.collection('books').updateOne(condition,newData).then(result=>{
@@ -34,7 +37,10 @@ class DataBooks {
     });
   }
 
-  static deleteData(condition){
+  static deleteData(id){
+    let condition={
+      _id : new ObjectID(id)
+    }
     return new Promise(function(resolve, reject) {
       MongoClient.connect(url, function(err, db) {
         db.collection('books').deleteOne(condition).then(result=>{

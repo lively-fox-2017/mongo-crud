@@ -24,9 +24,7 @@ static getAll(req,res){
 
 
     static editData(req,res){
-      let condition ={
-        isbn:req.body.isbn
-      }
+
       let newData={
         $set:{
           isbn: req.body.isbn,
@@ -36,17 +34,13 @@ static getAll(req,res){
           stock: req.body.stock
         }
       }
-      DataBooks.editData(condition,newData).then(result=>{
+      DataBooks.editData(req.body.id,newData).then(result=>{
         res.json(200,{msg:"edited id", data:result})
         })
       }
 
-    static deleteData(req,res){
-      let condition ={
-        isbn:req.body.isbn
-      }
-    
-      DataBooks.deleteData(condition).then(result=>{
+    static deleteData(req,res){    
+      DataBooks.deleteData(req.body.id).then(result=>{
         res.json(200,{msg:"deleted id", data:result})
         })
       }
